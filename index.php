@@ -15,6 +15,8 @@ $routes = [
     '/atores' => 'components/atores/atores.php',
     '/filmes' => 'components/filmes/filmes.php',
     '/categorias' => 'components/categorias/categorias.php',
+    '/gerenciamento' => 'components/gerenciamento/gerenciamento.php',
+
 
 ];
 

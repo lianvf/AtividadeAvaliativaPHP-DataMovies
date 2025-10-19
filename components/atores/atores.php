@@ -33,6 +33,7 @@ $atores = [
 ?>
 
 <link rel="stylesheet" href="/components/atores/atores.css">
+<link rel="stylesheet" href="/components/card/card.css">
 
 <div class="atores-container">
     <div class="atores-titulo">

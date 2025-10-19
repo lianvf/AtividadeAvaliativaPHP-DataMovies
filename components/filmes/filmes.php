@@ -33,6 +33,7 @@ $filmes = [
 ?>
 
 <link rel="stylesheet" href="/components/filmes/filmes.css">
+<link rel="stylesheet" href="/components/card/card.css">
 
 <div class="filmes-container">
     <div class="filmes-titulo">

@@ -14,7 +14,7 @@
             <a href="/categorias">Categorias</a>
             <a href="/atores">Atores</a>
             <a href="/filmes">Filmes</a>
-            <a href="#">Gerenciamento</a>
+            <a href="/gerenciamento">Gerenciamento</a>
         </div>
     </div>
 </body>
