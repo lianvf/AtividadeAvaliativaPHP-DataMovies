@@ -1,0 +1,27 @@
+.atores-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+}
+
+.atores-titulo {
+    display: flex;
+    justify-content: center;
+    margin: 2em;
+}
+
+.atores-titulo h1 {
+    background-color: #905e64;
+    color: #fb9680;
+    padding: 0.5em 1em;
+}
+
+.atores-lista {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}

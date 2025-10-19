@@ -1,0 +1,27 @@
+.filmes-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+}
+
+.filmes-titulo {
+    display: flex;
+    justify-content: center;
+    margin: 2em;
+}
+
+.filmes-titulo h1 {
+    background-color: #905e64;
+    color: #fb9680;
+    padding: 0.5em 1em;
+}
+
+.filmes-lista {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}

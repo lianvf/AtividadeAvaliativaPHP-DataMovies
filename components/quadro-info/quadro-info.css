@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.quadro-info-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.quadro-info {
+    display: flex;
+    flex-direction: column;
+    width: 35vw;
+    max-width: 800px;
+    border-bottom: 2px solid #905e64;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.quadro-info-header {
+    color: #fb9680;
+    padding: 1em 5em;
+    background-color: #905e64;
+    text-align: center;
+}
+
+.quadro-info-detalhes {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    background-color: white;
+}
+
+.quadro-info-labels p,
+.quadro-info-valores p {
+    color: #905e64;
+    font-size: 1.2rem;
+    margin: 5px 0;
+}
+

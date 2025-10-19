@@ -1,0 +1,41 @@
+
+.categorias-container {
+    width: 100%;
+    padding: 10vw 0; 
+    background-color: #f0f0f0; 
+}
+
+.categoria-secao {
+    margin-bottom: 2.5em;
+}
+
+.categoria-titulo {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #905e64; 
+    margin-bottom: 0.8em;
+    padding-left: 4%; 
+}
+
+.categoria-linha {
+    display: flex;
+    overflow-x: auto; 
+    overflow-y: hidden;
+    gap: 15px; 
+ 
+    padding: 0 4% 15px 4%; 
+}
+
+.categoria-linha::-webkit-scrollbar {
+    height: 8px;
+}
+.categoria-linha::-webkit-scrollbar-track {
+    background: transparent;
+}
+.categoria-linha::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+.categoria-linha::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}

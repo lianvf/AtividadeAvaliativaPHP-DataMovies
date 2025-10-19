@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.ator-info {
+    position: relative;
+    width: 100%;
+    height: 30vw;
+    overflow: hidden;
+}
+
+.ator-fundo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../img/the_rock.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    filter: brightness(0.6);
+}
+
+.ator-quadro {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+}
+
+.card-section {
+    margin-top: 1em;
+}
+
+.section-titulo {
+    color: #fb9680;
+    padding: 0.8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 1px;
+}
+
+.section-titulo h2{
+    background-color: #905e64;
+    box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.3);
+    padding: 0.5em 2em;
+    border-radius: 8px;
+
+}
