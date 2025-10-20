@@ -1,0 +1,75 @@
+a{
+    text-decoration: none;
+}
+
+.ator-info {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+}
+
+.ator-fundo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center 20%;
+    filter: brightness(0.5) blur(3px); 
+    z-index: -1;
+}
+
+.quadro-info-container {
+    padding: 2em;
+    margin-left: 5%;
+    max-width: 500px;
+    color: #fff;
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 8px;
+
+
+}
+
+.quadro-info-container h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    color: #fb9680;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+
+.quadro-info-container .detalhes {
+    display: flex;
+    gap: 1.5em;
+    font-size: 1.2rem;
+    color: #ddd;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    display: inline-flex;
+}
+
+/* Seção da Filmografia */
+.filmografia-container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 3em auto;
+}
+
+.filmografia-container h2 {
+    font-size: 2rem;
+    color: #905e64;
+    border-bottom: 2px solid #905e64;
+    padding-bottom: 0.5em;
+    margin-bottom: 1.5em;
+}
+
+.filmografia-lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}

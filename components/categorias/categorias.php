@@ -3,23 +3,26 @@ require_once __DIR__ . '/../../config/database.php';
 
 try {
     $conn = getConnection();
-    
-    // Buscar todas as categorias
-    $stmt = $conn->query("SELECT categoriaId as id, nome FROM categoria");
-    $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    // Buscar todos os filmes com suas categorias
-    $stmt = $conn->query("
+
+    $stmtCategorias = $conn->query("SELECT categoriaId as id, nome FROM categoria ORDER BY nome ASC");
+    $categorias = $stmtCategorias->fetchAll(PDO::FETCH_ASSOC);
+
+    $stmtFilmes = $conn->query("
         SELECT 
-            f.idFilme,
-            f.título as titulo,
-            f.categoriaId,
-            COALESCE(CONCAT('/img/', f.título, '.jpg'), '/img/default-movie.jpg') as imagem
-        FROM filme f
+            idFilme, 
+            título as titulo,
+            categoriaId,
+            imagemUrl
+        FROM filme
     ");
-    $filmes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-} catch(PDOException $e) {
+    $todosOsFilmes = $stmtFilmes->fetchAll(PDO::FETCH_ASSOC);
+
+    $filmesPorCategoria = [];
+    foreach ($todosOsFilmes as $filme) {
+        $filmesPorCategoria[$filme['categoriaId']][] = $filme;
+    }
+
+} catch (PDOException $e) {
     die("Erro ao buscar dados: " . $e->getMessage());
 }
 ?>
@@ -30,24 +33,35 @@ try {
 <div class="categorias-container">
 
     <?php foreach ($categorias as $categoria): ?>
-        
+
         <section class="categoria-secao">
-            
+
             <h2 class="categoria-titulo"><?= htmlspecialchars($categoria['nome']) ?></h2>
-            
+
             <div class="categoria-linha">
                 <?php
-                foreach ($filmes as $filme) {
-                    if ($filme['categoriaId'] == $categoria['id']) {
+                $categoriaId = $categoria['id'];
+
+                if (!empty($filmesPorCategoria[$categoriaId])) {
+
+                    foreach ($filmesPorCategoria[$categoriaId] as $filme) {
                         $nome = htmlspecialchars($filme['titulo']);
-                        $imagem = file_exists(substr($filme['imagem'], 1)) ? $filme['imagem'] : '/img/jumanjiposter.png';
+                        $imagem = !empty($filme['imagemUrl'])
+                            ? htmlspecialchars($filme['imagemUrl'])
+                            : '/img/default_movie.png';
+
                         
-                        require __DIR__ . '/../card/card.php';
+                        echo '<a href="/filme?id=' . $filme['idFilme'] . '" class="card-link">';
+                            require __DIR__ . '/../card/card.php';
+                        echo '</a>';
                     }
+
+                } else {
+                    echo '<p class="mensagem-vazia">Nenhum filme encontrado nesta categoria.</p>';
                 }
                 ?>
             </div>
-            
+
         </section>
 
     <?php endforeach; ?>

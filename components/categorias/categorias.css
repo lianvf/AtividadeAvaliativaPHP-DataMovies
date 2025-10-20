@@ -1,4 +1,6 @@
-
+a{
+    text-decoration: none;
+}
 .categorias-container {
     width: 100%;
     padding: 1em 0; 
@@ -12,11 +14,10 @@
 .categoria-titulo {
     font-size: 1.8rem;
     background-color: #905e64;
-    padding: 0.5em 0;
+    padding: 0.5em 4%; 
     font-weight: 600;
     color: #fb9680;
     margin-bottom: 0.8em;
-    padding-left: 4%; 
 }
 
 .categoria-linha {
@@ -24,9 +25,22 @@
     overflow-x: auto; 
     overflow-y: hidden;
     gap: 15px; 
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
- 
+    
+    flex-wrap: nowrap; 
+    
     padding: 0 4% 15px 4%; 
+}
+
+.categoria-linha::-webkit-scrollbar {
+    height: 8px;
+}
+.categoria-linha::-webkit-scrollbar-track {
+    background: transparent;
+}
+.categoria-linha::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+.categoria-linha::-webkit-scrollbar-thumb:hover {
+    background: #999;
 }

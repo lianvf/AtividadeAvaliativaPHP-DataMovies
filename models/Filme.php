@@ -8,18 +8,18 @@ class Filme {
         $this->conn = getConnection();
     }
 
-    public function create($titulo, $descricao, $anoLancamento, $categoriaId, $idiomaId, $classificacaoIndicativaId, $nacionalidadeId = null) {
+    public function create($titulo, $anoLancamento, $categoriaId, $idiomaId, $classificacaoIndicativaId, $nacionalidadeId, $imagemUrl) {
         try {
-            $sql = "INSERT INTO filme (título, descricao, anoLancamento, categoriaId, idiomaId, classificacaoIndicativaId, nacionalidadeId) 
-                    VALUES (:titulo, :descricao, :anoLancamento, :categoriaId, :idiomaId, :classificacaoIndicativaId, :nacionalidadeId)";
+            $sql = "INSERT INTO filme (título, anoLancamento, categoriaId, idiomaId, classificacaoIndicativaId, nacionalidadeId, imagemUrl) 
+                    VALUES (:titulo, :anoLancamento, :categoriaId, :idiomaId, :classificacaoIndicativaId, :nacionalidadeId, :imagemUrl)";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':titulo', $titulo);
-            $stmt->bindParam(':descricao', $descricao);
             $stmt->bindParam(':anoLancamento', $anoLancamento);
             $stmt->bindParam(':categoriaId', $categoriaId);
             $stmt->bindParam(':idiomaId', $idiomaId);
             $stmt->bindParam(':classificacaoIndicativaId', $classificacaoIndicativaId);
             $stmt->bindParam(':nacionalidadeId', $nacionalidadeId);
+            $stmt->bindParam(':imagemUrl', $imagemUrl);
             return $stmt->execute();
         } catch(PDOException $e) {
             die("Error creating movie: " . $e->getMessage());
@@ -55,26 +55,26 @@ class Filme {
         }
     }
 
-    public function update($id, $titulo, $descricao, $anoLancamento, $categoriaId, $idiomaId, $classificacaoIndicativaId, $nacionalidadeId = null) {
+    public function update($id, $titulo, $anoLancamento, $categoriaId, $idiomaId, $classificacaoIndicativaId, $nacionalidadeId, $imagemUrl) {
         try {
             $sql = "UPDATE filme 
                     SET título = :titulo, 
-                        descricao = :descricao, 
                         anoLancamento = :anoLancamento, 
                         categoriaId = :categoriaId, 
                         idiomaId = :idiomaId, 
                         classificacaoIndicativaId = :classificacaoIndicativaId, 
-                        nacionalidadeId = :nacionalidadeId 
+                        nacionalidadeId = :nacionalidadeId,
+                        imagemUrl = :imagemUrl
                     WHERE idFilme = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':titulo', $titulo);
-            $stmt->bindParam(':descricao', $descricao);
             $stmt->bindParam(':anoLancamento', $anoLancamento);
             $stmt->bindParam(':categoriaId', $categoriaId);
             $stmt->bindParam(':idiomaId', $idiomaId);
             $stmt->bindParam(':classificacaoIndicativaId', $classificacaoIndicativaId);
             $stmt->bindParam(':nacionalidadeId', $nacionalidadeId);
+            $stmt->bindParam(':imagemUrl', $imagemUrl);
             return $stmt->execute();
         } catch(PDOException $e) {
             die("Error updating movie: " . $e->getMessage());
@@ -82,29 +82,27 @@ class Filme {
     }
 
     public function delete($id) {
-        try {
-            // First, remove any actor associations
-            $sql = "DELETE FROM ator_filme WHERE idFilme = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
+    try {
+        $sql = "DELETE FROM ator_filme WHERE filmeId = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
 
-            // Then delete the movie
-            $sql = "DELETE FROM filme WHERE idFilme = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            return $stmt->execute();
-        } catch(PDOException $e) {
-            die("Error deleting movie: " . $e->getMessage());
-        }
+        $sql = "DELETE FROM filme WHERE idFilme = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    } catch(PDOException $e) {
+        die("Error deleting movie: " . $e->getMessage());
     }
+}
 
+    
     public function getAtores($filmeId) {
         try {
-            $sql = "SELECT a.* 
-                    FROM ator a 
-                    JOIN ator_filme af ON a.idAtor = af.idAtor 
-                    WHERE af.idFilme = :filmeId";
+            $sql = "SELECT a.* FROM ator a 
+                    JOIN ator_filme af ON a.idAtor = af.atorId 
+                    WHERE af.filmeId = :filmeId";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':filmeId', $filmeId);
             $stmt->execute();
@@ -116,7 +114,7 @@ class Filme {
 
     public function addAtor($filmeId, $atorId) {
         try {
-            $sql = "INSERT INTO ator_filme (idFilme, idAtor) VALUES (:filmeId, :atorId)";
+            $sql = "INSERT INTO ator_filme (filmeId, atorId) VALUES (:filmeId, :atorId)";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':filmeId', $filmeId);
             $stmt->bindParam(':atorId', $atorId);
@@ -128,7 +126,7 @@ class Filme {
 
     public function removeAtor($filmeId, $atorId) {
         try {
-            $sql = "DELETE FROM ator_filme WHERE idFilme = :filmeId AND idAtor = :atorId";
+            $sql = "DELETE FROM ator_filme WHERE filmeId = :filmeId AND atorId = :atorId";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':filmeId', $filmeId);
             $stmt->bindParam(':atorId', $atorId);

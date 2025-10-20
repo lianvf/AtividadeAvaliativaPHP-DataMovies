@@ -1,35 +1,20 @@
 <?php
-$atores = [
-    [
-        'nome' => 'Dwayne "The Rock" Johnson',
-        'imagem' => '/img/the_rock.jpg'
-    ],
-    [
-        'nome' => 'Gal Gadot',
-        'imagem' => '/img/the_rock.jpg'
+require_once __DIR__ . '/../../config/database.php';
 
-    ],
-    [
-        'nome' => 'Ryan Reynolds',
-        'imagem' => '/img/the_rock.jpg'
+try {
+    $conn = getConnection();
+    
+   $stmt = $conn->query("
+        SELECT idAtor, nome, sobrenome, imagemUrl 
+        FROM ator 
+        ORDER BY nome ASC
+    "); 
+    
+    $atores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    ],
-    [
-        'nome' => 'Chris Hemsworth',
-        'imagem' => '/img/the_rock.jpg'
-
-    ],
-    [
-        'nome' => 'Scarlett Johansson',
-        'imagem' => '/img/the_rock.jpg'
-
-    ],
-    [
-        'nome' => 'Tom Holland',
-        'imagem' => '/img/the_rock.jpg'
-
-    ]
-];
+} catch (PDOException $e) {
+    die("Erro ao buscar atores: " . $e->getMessage());
+}
 ?>
 
 <link rel="stylesheet" href="/components/atores/atores.css">
@@ -43,10 +28,17 @@ $atores = [
     <div class="atores-lista">
         <?php
         foreach ($atores as $ator) {
-   
-            $nome = $ator['nome'];
-            $imagem = $ator['imagem'];
-            require __DIR__ . '/../card/card.php';
+            
+            $nome = htmlspecialchars($ator['nome'] . ' ' . $ator['sobrenome']);
+            
+            
+            $imagem = !empty($ator['imagemUrl']) 
+                ? htmlspecialchars($ator['imagemUrl']) 
+                : '/img/default_avatar.png'; 
+
+            echo '<a href="/ator?id=' . $ator['idAtor'] . '" class="card-link">';
+                require __DIR__ . '/../card/card.php';
+            echo '</a>';
         }
         ?>
     </div>

@@ -1,35 +1,20 @@
 <?php
-$filmes = [
-    [
-        'nome' => 'Dwayne "The Rock" Johnson',
-        'imagem' => '/img/the_rock.jpg'
-    ],
-    [
-        'nome' => 'Gal Gadot',
-        'imagem' => 'https://upload.wikimedia.org/wikipedia/commons/3/38/Gal_Gadot_by_Gage_Skidmore_3.jpg'
+require_once __DIR__ . '/../../config/database.php';
 
-    ],
-    [
-        'nome' => 'Ryan Reynolds',
-        'imagem' => '/img/the_rock.jpg'
+try {
+    $conn = getConnection();
+    
+    $stmt = $conn->query("
+        SELECT idFilme, título, imagemUrl 
+        FROM filme 
+        ORDER BY título ASC
+    ");
+    
+    $filmes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    ],
-    [
-        'nome' => 'Chris Hemsworth',
-        'imagem' => 'https://upload.wikimedia.org/wikipedia/commons/6/69/Chris_Hemsworth_by_Gage_Skidmore_3.jpg'
-
-    ],
-    [
-        'nome' => 'Scarlett Johansson',
-        'imagem' => '/img/the_rock.jpg'
-
-    ],
-    [
-        'nome' => 'Tom Holland',
-        'imagem' => '/img/the_rock.jpg'
-
-    ]
-];
+} catch (PDOException $e) {
+    die("Erro ao buscar filmes: " . $e->getMessage());
+}
 ?>
 
 <link rel="stylesheet" href="/components/filmes/filmes.css">
@@ -43,10 +28,16 @@ $filmes = [
     <div class="filmes-lista">
         <?php
         foreach ($filmes as $filme) {
-   
-            $nome = $filme['nome'];
-            $imagem = $filme['imagem'];
-            require __DIR__ . '/../card/card.php';
+            
+            $nome = htmlspecialchars($filme['título']);
+            
+            $imagem = !empty($filme['imagemUrl']) 
+                ? htmlspecialchars($filme['imagemUrl']) 
+                : '/img/default_movie.png'; 
+
+            echo '<a href="/filme?id=' . $filme['idFilme'] . '" class="card-link">';
+                require __DIR__ . '/../card/card.php';
+            echo '</a>';
         }
         ?>
     </div>
